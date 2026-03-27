@@ -1,38 +1,54 @@
-// Neste arquivo tem-se a resolução parcial do exercícios "ContaBancaria_Enunciado.pdf"
-// A resolução completa está no arquivo "ContaBancaria_Gabarito.pdf"
 public class ContaBancaria{
+    // atributos
+    String titular;
+    String numero;
+    double saldo;
 
-    private String titular;
-    private String numero;
-    private double saldo;
-
-    // construtor = define como eu quero construir objetos da classe
-    public ContaBancaria(String titularInicial, String numeroInicial, double saldoInicial){
-        titular = titularInicial;
-        numero = numeroInicial;
-        saldo = saldoInicial;
-        // ContaBancaria conta1 ContaBancaria("Evandro", "430-63.0", 100);
+    // construtor = método para inicializar os atributos da classe
+    public ContaBancaria(String titular, String numero, double saldo){
+        this.titular = titular;
+        this.numero = numero;
+        this.saldo = saldo;
     }
-    
-    // comportamentos alem dos getter/setters
-    public void transferir(ContaBancaria destino, double valor){
-        // se o valor é maior que zero e ao mesmo menor ou igual ao saldo
-        if(valor >= 0 && valor <= saldo){
+
+    // métodos
+    public void depositar(double valor){ 
+        if(valor >= 0)
+            saldo += valor; // saldo = saldo + valor;
+        else // valor < 0
+            System.out.println("Digite um valor positivo.");  
+    }
+
+    public void sacar(double valor){
+        //&& = AND 
+        if(valor >= 0 && valor <= saldo)
             saldo -= valor; // saldo = saldo - valor;
-            destino.setSaldo(destino.getSaldo() + valor); // destino.saldo + valor
+        else
+            System.out.println("Digite um valor valido.");
+    }
 
-            // destino.saldo = 100, atual.tranferir(destino, 20)
-            // destino.setSaldo(100 += 20); destino.saldo = 120
-        }
+    public void consultarSaldo(){
+        // System.out.println("Titular: " + titular + " Numero: " + numero 
+        // + " Saldo: " + saldo);
+        // System.out.println("Saldo Formatado: " + String.format("%.2f", saldo));
+        System.out.printf("Titular: %s Numero: %s Saldo: %.2f \n", titular, numero, 
+        saldo);
     }
-    
-    //getter/setters
-    // get saldo
-    public double getSaldo(){
-        return saldo;
+
+    public void exibirExtrato(){
+        System.out.println("-------------------------------");
+        // informacoes
+        System.out.printf("Titular: %s Numero: %s Saldo: %.2f \n", titular, numero, 
+        saldo);
+        System.out.println("-------------------------------");
     }
-    // set saldo
-    public void setSaldo(double novoSaldo){
-        saldo = novoSaldo;
+
+    public void transferir(ContaBancaria destino, double valor){
+        if(valor >= 0 && valor <= saldo){ // valor é válido
+            // transferencia
+            saldo -= valor; // subtrai valor do saldo na conta de origem (atual)
+            destino.saldo += valor; // soma valor do saldo na conta de destino
+        }else
+            System.out.println("Digite um valor valido");
     }
 }
